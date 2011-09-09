@@ -2,7 +2,6 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-<?php echo $_metas; ?>
 <?php echo $_scripts; ?>
 <?php echo $_styles; ?>
    </head>

@@ -21,11 +21,11 @@
  * This class is and interface to CI's View class. It aims to improve the
  * interaction between controllers and views. Follow @link for more info
  *
- * @package		CodeIgniter
- * @author		Colin Williams
- * @subpackage	Libraries
- * @category	Libraries
- * @link		http://www.williamsconcepts.com/ci/libraries/template/index.html
+ * @package        CodeIgniter
+ * @author        Colin Williams
+ * @subpackage    Libraries
+ * @category    Libraries
+ * @link        http://www.williamsconcepts.com/ci/libraries/template/index.html
  * @copyright  Copyright (c) 2008, Colin Williams.
  * @version 1.4.1
  * 
@@ -49,13 +49,13 @@ class Template {
    
    var $template_regions = array();
    /**
-	 * Constructor
-	 *
-	 * Loads template configuration, template regions, and validates existence of 
-	 * default template
-	 *
-	 * @access	public
-	 */
+     * Constructor
+     *
+     * Loads template configuration, template regions, and validates existence of 
+     * default template
+     *
+     * @access    public
+     */
    
    function Template()
    {
@@ -68,7 +68,7 @@ class Template {
       {
          $this->config = $config;
          $this->set_template($config['active_template']);
-      }   
+      }
    }
    
    // --------------------------------------------------------------------
@@ -109,9 +109,13 @@ class Template {
    
    function set_master_template($filename)
    {
-      if ( file_exists(APPPATH .'templates/'.$filename.'/index' . EXT ) )
+      if (file_exists(APPPATH .'views/'. $filename) 
+            or file_exists(APPPATH .'views/'. $filename . EXT)
+            or file_exists(APPPATH .'modules/display/views/'. $filename )
+            or file_exists(APPPATH .'modules/display/views/'. $filename . EXT)
+      )
       {
-         $this->master = "index";
+         $this->master = $filename;
       }
       else
       {
@@ -160,15 +164,17 @@ class Template {
    {
       // Set master template
       if (isset($props['template']) 
-         && file_exists(APPPATH .'templates/'. $props['template']. '/index' . EXT ))
-      {
-         $this->master = "index";
+         && (file_exists(APPPATH .'views/'. $props['template']) 
+            or file_exists(APPPATH .'views/'. $props['template'] . EXT)
+            or file_exists(APPPATH .'modules/display/views/'. $props['template'] )
+            or file_exists(APPPATH .'modules/display/views/'. $props['template'] . EXT )
+            )
+      ){
+         $this->master = $props['template'];
       } else  {
          // Master template must exist. Throw error.
          show_error('Either you have not provided a master template or the one provided does not exist in <strong>'. APPPATH .'views</strong>. Remember to include the extension if other than ".php"');
       }
-	  
-
       
       // Load our regions
       if (isset($props['regions']))
@@ -330,14 +336,14 @@ class Template {
    // --------------------------------------------------------------------
    
    /**
-	 * Write contents to a region
-	 *
-	 * @access	public
-	 * @param	string	region to write to
-	 * @param	string	what to write
-	 * @param	boolean	FALSE to append to region, TRUE to overwrite region
-	 * @return	void
-	 */
+     * Write contents to a region
+     *
+     * @access    public
+     * @param    string    region to write to
+     * @param    string    what to write
+     * @param    boolean    FALSE to append to region, TRUE to overwrite region
+     * @return    void
+     */
    
    function write($region, $content, $overwrite = FALSE)
    {
@@ -361,15 +367,15 @@ class Template {
    // --------------------------------------------------------------------
    
    /**
-	 * Write content from a View to a region. 'Views within views'
-	 *
-	 * @access	public
-	 * @param	string	region to write to
-	 * @param	string	view file to use
-	 * @param	array	variables to pass into view
-	 * @param	boolean	FALSE to append to region, TRUE to overwrite region
-	 * @return	void
-	 */
+     * Write content from a View to a region. 'Views within views'
+     *
+     * @access    public
+     * @param    string    region to write to
+     * @param    string    view file to use
+     * @param    array    variables to pass into view
+     * @param    boolean    FALSE to append to region, TRUE to overwrite region
+     * @return    void
+     */
    
    function write_view($region, $view, $data = NULL, $overwrite = FALSE)
    {
@@ -383,7 +389,11 @@ class Template {
       {
          foreach ($args as $suggestion)
          {
-            if ( file_exists(APPPATH .'templates/'. $this->template ."/". $suggestion . EXT ) )
+            if (file_exists(APPPATH .'views/'. $suggestion . EXT) 
+                or file_exists(APPPATH .'views/'. $suggestion)
+                or file_exists(APPPATH .'modules/display/views/'. $suggestion )
+                or file_exists(APPPATH .'modules/display/views/'. $suggestion . EXT )
+            )
             {
                // Just change the $view arg so the rest of our method works as normal
                $view = $suggestion;
@@ -391,9 +401,10 @@ class Template {
             }
          }
       }
-
-      $content = $this->CI->load->view("../templates/".$view, $data, TRUE);
+      
+      $content = $this->CI->load->view($view, $data, TRUE);
       $this->write($region, $content, $overwrite);
+
    }
    
    // --------------------------------------------------------------------
@@ -423,7 +434,11 @@ class Template {
       {
          foreach ($args as $suggestion)
          {
-            if (file_exists(APPPATH .'templates/'. $this->template ."/". $suggestion . EXT ))
+            if (file_exists(APPPATH .'views/'. $suggestion . EXT) 
+                or file_exists(APPPATH .'views/'. $suggestion)
+                or file_exists(APPPATH .'modules/display/views/'. $suggestion )
+                or file_exists(APPPATH .'modules/display/views/'. $suggestion . EXT )
+            )
             {
                // Just change the $view arg so the rest of our method works as normal
                $view = $suggestion;
@@ -531,7 +546,7 @@ class Template {
             {
                $css .= ' media="'. $media .'"';
             }
-            $css .= ' >'."\n";
+            $css .= ' />'."\n";
             break;
          
          case 'import':
@@ -562,13 +577,13 @@ class Template {
    // --------------------------------------------------------------------
    
    /**
-	 * Render the master template or a single region
-	 *
-	 * @access	public
-	 * @param	string	optionally opt to render a specific region
-	 * @param	boolean	FALSE to output the rendered template, TRUE to return as a string. Always TRUE when $region is supplied
-	 * @return	void or string (result of template build)
-	 */
+     * Render the master template or a single region
+     *
+     * @access    public
+     * @param    string    optionally opt to render a specific region
+     * @param    boolean    FALSE to output the rendered template, TRUE to return as a string. Always TRUE when $region is supplied
+     * @return    void or string (result of template build)
+     */
    
    function render($region = NULL, $buffer = FALSE, $parse = FALSE)
    {
@@ -583,7 +598,11 @@ class Template {
          {
             show_error("Cannot render the '{$region}' region. The region is undefined.");
          }
-      } else {// Build the output array
+      }
+      
+      // Build the output array
+      else
+      {
          foreach ($this->regions as $name => $region)
          {
             $this->output[$name] = $this->_build_content($region);
@@ -599,11 +618,14 @@ class Template {
             {
                $this->CI->output->set_output($output);
             }
-         } else {
+         }
+         else
+         {
             // Use CI's loader class to render the template with our output array
-            $output = $this->CI->load->view("../templates/".$this->template['template']."/".$this->master, $this->output, $buffer);
+            $output = $this->CI->load->view($this->master, $this->output, $buffer);
          }
       }
+      
       return $output;
    }
    
@@ -626,14 +648,14 @@ class Template {
    // --------------------------------------------------------------------
    
    /**
-	 * Build a region from it's contents. Apply wrapper if provided
-	 *
-	 * @access	private
-	 * @param	string	region to build
-	 * @param	string	HTML element to wrap regions in; like '<div>'
-	 * @param	array	Multidimensional array of HTML elements to apply to $wrapper
-	 * @return	string	Output of region contents
-	 */
+     * Build a region from it's contents. Apply wrapper if provided
+     *
+     * @access    private
+     * @param    string    region to build
+     * @param    string    HTML element to wrap regions in; like '<div>'
+     * @param    array    Multidimensional array of HTML elements to apply to $wrapper
+     * @return    string    Output of region contents
+     */
    
    function _build_content($region, $wrapper = NULL, $attributes = NULL)
    {
