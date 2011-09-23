@@ -19,7 +19,7 @@ class Example extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->render('html','default');   
+		$this->render();   
 	}
 }
 

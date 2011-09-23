@@ -188,6 +188,9 @@ class Template {
       
       // Set master template parser instructions
       $this->parse_template = isset($props['parse_template']) ? $props['parse_template'] : FALSE;
+	  
+	  // Initialize plugins
+	  $this->initialize_plugins();
       
       // Initialize defaults javascripts
       if ( isset($this->template['javascripts']) )
@@ -206,6 +209,30 @@ class Template {
              $this->add_css($stylesheet);
          }
       }  
+   }
+
+   function initialize_plugins()
+   {
+   		// Reset Plugin
+   		if ( in_array('reset', $this->template['plugins']))
+		{
+			$this->add_css('reset.css');	
+		}
+		
+   		// Grid Plugin
+   		if ( array_key_exists('grid',$this->template['plugins']))
+		{
+			$grid_config = $this->template['plugins']['grid'];
+			$this->add_css('grid.php?width='.$grid_config['width'].'&margin='.$grid_config['margin'].'&columns='.$grid_config['columns']);
+		}
+		
+		// Jquery Plugin
+		if ( array_key_exists('jquery',$this->template['plugins']))
+		{
+			$jquery_config = $this->template['plugins']['jquery'];
+			$this->add_js('jquery-'.$jquery_config['version'].'.min.js');
+		}
+
    }
    
    // --------------------------------------------------------------------

@@ -35,10 +35,7 @@ class Html extends MX_Controller
         
         /* Template Regions */
         foreach( $this->template->template_regions as $tr )
-        {
-            if ( $tr == 'sidebar' && !$data['sidebar'])
-                continue;
-                
+        {             
             $this->template->write_view($tr, $template.'/'.$tr, $data );
         }
         
@@ -47,11 +44,6 @@ class Html extends MX_Controller
         {
             foreach( $data['regions'] as $key=>$value)
             {
-                if ( $key == 'content' && !$data['sidebar'])
-                    $this->template->regions['content']['attributes']['class'] = 'nosidebar';
-                else if ( $key == 'content' && $data['sidebar'])                
-                    $this->template->regions['content']['attributes']['class'] = 'sidebar';
-
                 $this->template->write($key, $value, TRUE);
             }
         }

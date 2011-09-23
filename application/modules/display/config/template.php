@@ -32,5 +32,12 @@ $config['default']['javascripts'] = array();
 $config['default']['css_path'] = 'assets/css/';
 $config['default']['stylesheets'] = array();
 
+$config['default']['plugins'] = array('reset',
+									  'grid'=>array('width'=>960, 'margin'=>10, 'columns'=>12),
+									  'jquery'=>array('version'=>'1.6.3'));
+
+$config['default']['header_height'] = 100;
+$config['default']['footer_height'] = 100;
+
 $config['default']['template_regions'] = array('metas','header', 'footer', 'analytics');
 

@@ -10,7 +10,7 @@ class MY_Controller extends MX_Controller
         parent::__construct();
     }
     
-    public function render($type = 'html', $template = null)
+    public function render($type = 'html', $template = 'default')
     {
         echo Modules::run('display/'.$type.'/index', $this->data, $template);
     }
