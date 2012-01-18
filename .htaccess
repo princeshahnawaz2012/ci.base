@@ -1,7 +1,7 @@
 SetEnv PHP_VER 5
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /ci.base/
+    RewriteBase /wse/panaewa/ci.base/
 
     #Removes access to the system folder by users.
     #Additionally this will allow you to create a System.php controller,
