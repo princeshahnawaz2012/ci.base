@@ -33,8 +33,8 @@ $config['default']['css_path'] = 'assets/css/';
 $config['default']['stylesheets'] = array();
 
 $config['default']['plugins'] = array('reset',
-									  'grid'=>array('width'=>960, 'margin'=>10, 'columns'=>12),
-									  'jquery'=>array('version'=>'1.6.3'));
+									  'grid'=>array('width'=>960, 'margin'=>10, 'columns'=>16),
+									  'jquery'=>array('version'=>'1.7.1'));
 
 $config['default']['header_height'] = 100;
 $config['default']['footer_height'] = 100;

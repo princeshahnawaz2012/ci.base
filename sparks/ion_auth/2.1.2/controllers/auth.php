@@ -1,11 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-if ( ! class_exists('Controller'))
-{
-	class Controller extends CI_Controller {}
-}
-
-class Auth extends Controller {
+class Auth extends CI_Controller {
 
 	function __construct()
 	{
@@ -40,7 +35,7 @@ class Auth extends Controller {
 			$this->data['users'] = $this->ion_auth->users()->result();
 			foreach ($this->data['users'] as $k => $user)
 			{
-				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id);
+				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 	
 			
@@ -117,28 +112,33 @@ class Auth extends Controller {
 		{
 			redirect('auth/login', 'refresh');
 		}
-		$user = $this->ion_auth->get_user($this->session->userdata('user_id'));
+		
+		$user = $this->ion_auth->user()->row();
 
 		if ($this->form_validation->run() == false)
 		{ //display the form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-			$this->data['old_password'] = array('name' => 'old',
-				'id' => 'old',
+			$this->data['old_password'] = array(
+				'name' => 'old',
+				'id'   => 'old',
 				'type' => 'password',
 			);
-			$this->data['new_password'] = array('name' => 'new',
-				'id' => 'new',
+			$this->data['new_password'] = array(
+				'name' => 'new',
+				'id'   => 'new',
 				'type' => 'password',
 			);
-			$this->data['new_password_confirm'] = array('name' => 'new_confirm',
-				'id' => 'new_confirm',
+			$this->data['new_password_confirm'] = array(
+				'name' => 'new_confirm',
+				'id'   => 'new_confirm',
 				'type' => 'password',
 			);
-			$this->data['user_id'] = array('name' => 'user_id',
-				'id' => 'user_id',
-				'type' => 'hidden',
+			$this->data['user_id'] = array(
+				'name'  => 'user_id',
+				'id'    => 'user_id',
+				'type'  => 'hidden',
 				'value' => $user->id,
 			);
 

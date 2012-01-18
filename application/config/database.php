@@ -48,9 +48,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'usuario';
-$db['default']['password'] = 'password';
-$db['default']['database'] = 'ci.base';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'renovatio';
+$db['default']['database'] = 'ci_base';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

@@ -3,14 +3,14 @@
     
     $width = $_GET['width'];
     $margin = $_GET['margin'];
-    $columns = 12;
+    $columns = $_GET['columns'];
     
     $column_width = $width/$columns;
     
 ?> 
 body { min-width: <?php echo $width; ?>px;}
 
-.container_12 { margin:0 auto; width: <?php echo $width; ?>px; }
+.container_<?php echo $columns; ?> { margin:0 auto; width: <?php echo $width; ?>px; }
 
 <?php for( $i = 1; $i <= $columns ; $i++ ) { 
     echo ".grid_".$i." { display:inline; float:left; margin: 0px ".$margin."px;}\n";    
@@ -27,24 +27,24 @@ body { min-width: <?php echo $width; ?>px;}
 /* `Grid >> 12 Columns
 ----------------------------------------------------------------------------------------------------*/
 <?php for( $i = 1; $i <= $columns ; $i++ ) { 
-    echo ".container_12 .grid_".$i." { width:".($column_width*$i - $margin*2)."px}\n";    
+    echo ".container_".$columns." .grid_".$i." { width:".($column_width*$i - $margin*2)."px}\n";    
 } ?>
 
 <?php for( $i = 1; $i < $columns ; $i++ ) { 
-    echo ".container_12 .prefix_".$i." { padding-left:".($column_width*$i)."px}\n";    
+    echo ".container_".$columns." .prefix_".$i." { padding-left:".($column_width*$i)."px}\n";    
 } ?>
 
 <?php for( $i = 1; $i < $columns ; $i++ ) { 
-    echo ".container_12 .suffix_".$i." { padding-right:".($column_width*$i)."px}\n";    
+    echo ".container_".$columns." .suffix_".$i." { padding-right:".($column_width*$i)."px}\n";    
 } ?>
 
 <?php for( $i = 1; $i < $columns ; $i++ ) { 
-    echo ".container_12 .push_".$i." { left:".($column_width*$i)."px}\n";    
+    echo ".container_".$columns." .push_".$i." { left:".($column_width*$i)."px}\n";    
 } ?>
 
 
 <?php for( $i = 1; $i < $columns ; $i++ ) { 
-    echo ".container_12 .pull_".$i." { left:-".($column_width*$i)."px}\n";    
+    echo ".container_".$columns." .pull_".$i." { left:-".($column_width*$i)."px}\n";    
 } ?>
 
 .clear {clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0;}

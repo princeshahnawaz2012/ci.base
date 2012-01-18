@@ -230,7 +230,11 @@ class Template {
 		if ( array_key_exists('jquery',$this->template['plugins']))
 		{
 			$jquery_config = $this->template['plugins']['jquery'];
-			$this->add_js('jquery-'.$jquery_config['version'].'.min.js');
+			
+			if ( file_exists(FCPATH."assets/js/jquery-".$jquery_config['version'].".min.js") )
+				$this->add_js('jquery-'.$jquery_config['version'].'.min.js');
+			else
+				$this->add_js("http://ajax.googleapis.com/ajax/libs/jquery/".$jquery_config['version']."/jquery.min.js");
 		}
 
    }
