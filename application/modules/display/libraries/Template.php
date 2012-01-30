@@ -236,6 +236,13 @@ class Template {
 			else
 				$this->add_js("http://ajax.googleapis.com/ajax/libs/jquery/".$jquery_config['version']."/jquery.min.js");
 		}
+		
+		// Less Plugin
+		if ( in_array('less', $this->template['plugins']) )
+		{
+			$this->add_css('styles.less', 'less');
+			$this->add_js('less-1.2.1.min.js');
+		}
 
    }
    
@@ -555,6 +562,12 @@ class Template {
       
       switch ($type)
       {
+      	case 'less':
+      	
+      		$css = "\t".'<link type="text/css" rel="stylesheet/less" href="'. $filepath .'"';
+      		$css .= ' >'."\n";
+      		break;
+      	
          case 'link':
             
             $css = "\t".'<link type="text/css" rel="stylesheet" href="'. $filepath .'"';
