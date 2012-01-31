@@ -11,6 +11,8 @@ class Html extends MX_Controller
     function index($data, $template)
     {
         $this->load->library('template');
+        $this->load->library('lessc');
+        
         $this->template->CI = & $this;   
         if ( $template != 'default' )
             $this->template->set_template($template);     
@@ -29,7 +31,18 @@ class Html extends MX_Controller
         {
             foreach($data['stylesheet'] as $css)
             {
-                $this->template->add_css($css);
+				if ( strpos($css, ".less") !== FALSE )
+				{
+					$in_file  = FCPATH."assets/css/".$css;
+					$out_file = FCPATH."assets/css/".$css.".css";
+					
+					if ( filemtime($in_file) > filemtime($out_file) )					
+						file_put_contents($out_file, $this->lessc->parse(file_get_contents($in_file)));
+
+					$this->template->add_css($css.".css");
+				} else {
+					$this->template->add_css($css);
+				}
             }
         }    
         

@@ -7,21 +7,29 @@
 <?php echo $_scripts; ?>
 
    </head>
+   
    <body>
       <div id="wrapper">
+      
          <div id="header">
             <?php echo $header; ?>
          </div>
+
          <div id="main">
+         
             <div id="content">
                 <?php echo $content; ?>
             </div>
+            
             <div id="sidebar">
                 <?php echo $sidebar; ?>
             </div>
+            
          </div>
+         
          <div id="footer">
             <?php echo $footer; ?>
+         
          </div>
       </div>
    </body>

@@ -19,6 +19,7 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{	
+		$this->data['stylesheet']= array('styles.less');
 		$this->set_region('content', $this->load->view('welcome_message',null, TRUE ));
 		$this->render();
 	}
