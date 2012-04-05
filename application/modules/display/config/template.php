@@ -34,7 +34,7 @@ $config['default']['stylesheets'] = array();
 
 $config['default']['plugins'] = array('reset',
 									  'grid'=>array('width'=>960, 'margin'=>10, 'columns'=>16),
-									  'jquery'=>array('version'=>'1.7.1'),
+									  'jquery'=>array('version'=>'1.7.2'),
 									  'less');
 
 $config['default']['header_height'] = 100;
